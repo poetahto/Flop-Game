@@ -1,7 +1,7 @@
 extends KinematicBody2D
 class_name Player
 
-export var max_speed = Vector2(300.0, 300.0)
+export var max_speed = Vector2(500.0, 300.0)
 export var gravity: = 10.0
 
 # The X value shows the direction a player should be moving as a float,
@@ -16,16 +16,11 @@ var velocity: = Vector2.ZERO
 # 
 func _physics_process(delta: float) -> void:
 	
-	_update_animation()
-	
-	# Allows developers to teleport upward with the "Up" or "W" keys
-	# TODO: Remove this if statement for final release!
-	if Input.is_action_just_pressed("move_up"):
-		position.y -= 300
-	
 	direction = Vector2 (
 		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"), 1.0
 	)
+	
+	_update_animation()
 	
 	velocity = max_speed * direction
 	
@@ -35,10 +30,15 @@ func _physics_process(delta: float) -> void:
 	velocity = move_and_slide(velocity, Vector2(0, -1))
 
 func _update_animation() -> void:
-	if is_on_floor():
-		get_node("Player Animation").set_animation("Idle")
+	if is_on_floor() and get_node("Player Animation").get_animation() == "Falling":
 		max_speed.x = 150
-	elif !is_on_floor():
+		get_node("Player Animation").set_animation("Idle")
+		get_node("Player Collider Falling").set_disabled(true)
+		get_node("Player Collider Idle").set_disabled(false)
+		
+	elif !is_on_floor() and get_node("Player Animation").get_animation() == "Idle":
+		max_speed.x = 400
 		get_node("Player Animation").set_animation("Falling")
-		max_speed.x = 500
+		get_node("Player Collider Idle").set_disabled(true)
+		get_node("Player Collider Falling").set_disabled(false)
 	
