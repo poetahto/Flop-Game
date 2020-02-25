@@ -15,6 +15,9 @@ var velocity: = Vector2.ZERO
 # This function is run once every frame at a constant rate: be sure to multiply
 # 
 func _physics_process(delta: float) -> void:
+	
+	_update_animation()
+	
 	# Allows developers to teleport upward with the "Up" or "W" keys
 	# TODO: Remove this if statement for final release!
 	if Input.is_action_just_pressed("move_up"):
@@ -26,9 +29,16 @@ func _physics_process(delta: float) -> void:
 	
 	velocity = max_speed * direction
 	
-	velocity.y += gravity * delta
+	#velocity.y += gravity * delta
 	#velocity.y = min(velocity.y, max_speed.y)
 	
-	velocity = move_and_slide(velocity)
+	velocity = move_and_slide(velocity, Vector2(0, -1))
+
+func _update_animation() -> void:
+	if is_on_floor():
+		get_node("Player Animation").set_animation("Idle")
+		max_speed.x = 150
+	elif !is_on_floor():
+		get_node("Player Animation").set_animation("Falling")
+		max_speed.x = 500
 	
-	print_debug(velocity)
