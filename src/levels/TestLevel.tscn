@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://src/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/sprites/SpritesheetPH.png" type="Texture" id=2]
-[ext_resource path="res://src/levels/Droppable.gd" type="Script" id=3]
+[ext_resource path="res://src/scripts/Droppable.gd" type="Script" id=3]
+[ext_resource path="res://src/scripts/reset button.gd" type="Script" id=4]
+[ext_resource path="res://src/scripts/main menu button.gd" type="Script" id=5]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -72,3 +74,28 @@ script = ExtResource( 3 )
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 293.506, -3763.56 )
 collision/safe_margin = 0.8
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="reset button" type="Button" parent="CanvasLayer"]
+margin_left = 705.632
+margin_top = 472.632
+margin_right = 983.632
+margin_bottom = 512.632
+text = "reset"
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="main menu button" type="Button" parent="CanvasLayer"]
+margin_left = 707.737
+margin_top = 532.632
+margin_right = 985.737
+margin_bottom = 572.632
+text = "main menu"
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

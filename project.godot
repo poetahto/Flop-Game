@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "TileMap",
 "class": "Droppable",
 "language": "GDScript",
-"path": "res://src/levels/Droppable.gd"
+"path": "res://src/scripts/Droppable.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Player",
@@ -27,8 +27,12 @@ _global_script_class_icons={
 [application]
 
 config/name="Flop"
-run/main_scene="res://src/levels/TestLevel.tscn"
+run/main_scene="res://src/levels/Main Menu.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+SceneChanger="*res://src/scenes/SceneChanger.tscn"
 
 [input]
 
