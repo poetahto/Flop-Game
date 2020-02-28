@@ -4,6 +4,10 @@ class_name Player
 export var max_speed = Vector2(500.0, 300.0)
 export var gravity: = 10.0
 
+onready var player_animation = get_node("Player Animation");
+onready var player_collider_falling = get_node("Player Collider Falling")
+onready var player_collider_idle = get_node("Player Collider Idle")
+
 # The X value shows the direction a player should be moving as a float,
 # ranging from -1 to 1. The Y value is always zero.
 var direction: Vector2
@@ -30,15 +34,25 @@ func _physics_process(delta: float) -> void:
 	velocity = move_and_slide(velocity, Vector2(0, -1))
 
 func _update_animation() -> void:
-	if is_on_floor() and get_node("Player Animation").get_animation() == "Falling":
-		max_speed.x = 150
-		get_node("Player Animation").set_animation("Idle")
-		get_node("Player Collider Falling").set_disabled(true)
-		get_node("Player Collider Idle").set_disabled(false)
-		
-	elif !is_on_floor() and get_node("Player Animation").get_animation() == "Idle":
-		max_speed.x = 400
-		get_node("Player Animation").set_animation("Falling")
-		get_node("Player Collider Idle").set_disabled(true)
-		get_node("Player Collider Falling").set_disabled(false)
 	
+	if(direction.x != 0):
+		if(direction.x <= 0): player_animation.set_flip_h(true)
+		if(direction.x >= 0): player_animation.set_flip_h(false)
+	
+	if is_on_floor() and direction.x == 0 and player_animation.get_animation() != "Idle":
+		max_speed.x = 150
+		player_animation.set_animation("Idle")
+		player_collider_falling.set_disabled(true)
+		player_collider_idle.set_disabled(false)
+		
+	elif is_on_floor() and direction.x != 0 and player_animation.get_animation() != "Walking":
+		max_speed.x = 150
+		player_animation.set_animation("Walking")
+		player_collider_falling.set_disabled(true)
+		player_collider_idle.set_disabled(false)
+	
+	elif !is_on_floor() and player_animation.get_animation() != "Falling":
+		max_speed.x = 400
+		player_animation.set_animation("Falling")
+		player_collider_idle.set_disabled(true)
+		player_collider_falling.set_disabled(false)

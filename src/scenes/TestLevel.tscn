@@ -75,10 +75,10 @@ script = ExtResource( 3 )
 position = Vector2( 293.506, -3763.56 )
 collision/safe_margin = 0.8
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="dev buttons" type="CanvasLayer" parent="."]
 layer = 0
 
-[node name="reset button" type="Button" parent="CanvasLayer"]
+[node name="reset button" type="Button" parent="dev buttons"]
 margin_left = 705.632
 margin_top = 472.632
 margin_right = 983.632
@@ -89,7 +89,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="main menu button" type="Button" parent="CanvasLayer"]
+[node name="main menu button" type="Button" parent="dev buttons"]
 margin_left = 707.737
 margin_top = 532.632
 margin_right = 985.737
